@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as ArrowLeft } from "../assets/chevron-left.svg";
 
 const NotePage = () => {
@@ -10,7 +10,7 @@ const NotePage = () => {
 
   const getFilteredNote = async () => {
     if (id !== "new") {
-      const response = await fetch(`http://localhost:8000/notes/${id}`);
+      const response = await fetch(`http://localhost:8000/api/notes/${id}`);
       const data = await response.json();
       setNote(data);
     }
@@ -22,29 +22,29 @@ const NotePage = () => {
 
   // Update note function
   const updateNote = async () => {
-    await fetch(`http://localhost:8000/notes/${id}`, {
+    await fetch(`http://localhost:8000/api/notes/${id}/update`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...note, updated: new Date() }),
+      body: JSON.stringify(note),
     });
   };
 
   // Delete note function
   const deleteNote = async () => {
-    await fetch(`http://localhost:8000/notes/${id}/`, {
+    await fetch(`http://localhost:8000/api/notes/${id}/delete`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(note),
+      // body: JSON.stringify(note),
     });
     navigate("/");
   };
 
   // Create note function
   const createNote = async () => {
-    await fetch(`http://localhost:8000/notes/`, {
+    await fetch(`http://localhost:8000/api/notes/new`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...note, updated: new Date() }),
+      body: JSON.stringify(note),
     });
   };
 
@@ -64,9 +64,7 @@ const NotePage = () => {
     <div className="note">
       <div className="note-header">
         <h3>
-          <Link to="/">
-            <ArrowLeft onClick={handleSubmit} />
-          </Link>
+          <ArrowLeft onClick={handleSubmit} />
         </h3>
         {id !== "new" ? (
           <button onClick={deleteNote}>Delete</button>

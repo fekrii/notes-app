@@ -16,7 +16,7 @@ const ListItem = ({ note }) => {
 
   return (
     <>
-      <Link to={`/note/${note.id}`}>
+      <Link to={`notes/${note.id}`}>
         <div className="notes-list-item">
           <h3>{getTitle()}</h3>
           <p>

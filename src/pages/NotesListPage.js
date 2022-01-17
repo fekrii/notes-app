@@ -7,7 +7,7 @@ const NotesListPage = () => {
   const [notes, setNotes] = useState([]);
 
   const getNotesData = async () => {
-    const response = await fetch("http://localhost:8000/notes");
+    const response = await fetch("/api/notes/");
     const data = await response.json();
     setNotes(data);
   };
@@ -27,7 +27,7 @@ const NotesListPage = () => {
           <ListItem note={note} key={note.id} />
         ))}
       </div>
-      <Link to="/note/new" className="floating-button">
+      <Link to="/notes/new" className="floating-button">
         <AddIcon />
       </Link>
     </div>
